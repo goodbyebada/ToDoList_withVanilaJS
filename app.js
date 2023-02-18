@@ -23,3 +23,18 @@ loginForm.addEventListener("submit", onLoginsubmit);
 const savedUsername = localStorage.getItem("username");
 //localStorage에 저장된 username, savedUsername에 저장
 //새로고침해도 localStorage에 저장되어있음
+
+if (savedUsername == null) {
+  // loginForm 다시 보여주기
+  loginForm.classList.remove("hidden");
+  loginForm.addEventListener("submit", onLoginsubmit);
+} else {
+  //greeting message 띄우기
+
+  //새로고침하면 모든것은 초기화
+  //기억하는건 savedUsername밖에 없음
+  //--> loginForm도 없애는 코드 추가해줘야함
+  loginForm.classList.add("hidden");
+  greeting.classList.remove("hidden");
+  greeting.innerText = `Hello ${savedUsername}`;
+}
