@@ -2,6 +2,10 @@ function sayHello() {
   console.log("hello");
 }
 
+const greeting = document.querySelector("#greeting");
+
+greeting.innerText = "Hello youjin!";
+
 // setInterval(sayHello, 5000);
 // //-> 5초마다 등장
 
@@ -24,5 +28,3 @@ function clockFun() {
 clockFun();
 setInterval(clockFun, 1000);
 //1초마다
-
-let phrase = "천사기태는 존재한다!!";
