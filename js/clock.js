@@ -2,10 +2,6 @@ function sayHello() {
   console.log("hello");
 }
 
-const greeting = document.querySelector("#greeting");
-
-greeting.innerText = "Hello youjin!";
-
 // setInterval(sayHello, 5000);
 // //-> 5초마다 등장
 
