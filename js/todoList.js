@@ -4,66 +4,52 @@ const todoInput = document.querySelector("#todoForm input");
 const todoList = document.getElementById("todoList");
 let toDos = [];
 
-// function removeBtn(event) {
-//   const li = event.composedPath()[1];
-//   toDos = toDos.filter((todo) => todo.id !== parseInt(li.id));
-//   li.remove();
-
-//   todoStoreList();
-// }
-
 function deleteToDo(event) {
   const li = event.target.parentElement;
-  console.log(li.id);
+  console.log(li);
+  console.log(parseInt(li.id));
   li.remove();
   toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
-  // saveToDos();
+  localStorage.setItem("toDos", JSON.stringify(toDos));
 }
 
-// function paintToDo(newToDo) {
-//   const li = document.createElement("li");
-//   const span = document.createElement("span");
-//   const btn = document.createElement("button");
-//   //역으로 만들어주기
-//   li.appendChild(span);
-//   li.appendChild(btn);
-
-//   span.innerText = newToDo.text;
-//   btn.innerText = "❎";
-
-//   btn.addEventListener("click", removeBtn);
-//   //혹시 순서가 상관이 있을까? -> 상관없음
-//   //이미 들어가 있는 상태로 innerText가 생기는거니까
-//   todoList.appendChild(li);
-
-//   console.log(`log ${newToDo.text}`);
-// }
-
-function paintToDo(newTodo) {
+function paintToDo(newToDo) {
   const li = document.createElement("li");
-  // li.id = newTodo.id;
+  li.id = newToDo.id;
+
   const span = document.createElement("span");
-  span.innerText = newTodo.text;
-  const button = document.createElement("button");
-  button.innerText = "❌";
-  button.addEventListener("click", deleteToDo);
+  const btn = document.createElement("button");
+  //역으로 만들어주기
+
   li.appendChild(span);
-  li.appendChild(button);
+  li.appendChild(btn);
+
+  span.innerText = newToDo.text;
+  btn.innerText = "check@";
+
   todoList.appendChild(li);
+
+  btn.addEventListener("click", deleteToDo);
 }
 
 function handleTodolist(e) {
   e.preventDefault();
+
   const newToDo = todoInput.value;
-  todoInput.value = "";
+  console.log(newToDo);
+
+  todoInput.value = " ";
+
   const newToDoObj = {
     text: newToDo,
     id: Date.now(),
   };
+  //ex) { "1" : "123213"} 한 쌍식 생성
 
   todoStoreList(newToDoObj);
 
-  paintTodo(newToDoObj);
+  paintToDo(newToDoObj);
+  console.log(`======paintTOdo 실행! ======`);
 }
 
 function todoStoreList(newToDo) {
@@ -74,39 +60,30 @@ function todoStoreList(newToDo) {
 todoForm.addEventListener("submit", handleTodolist);
 
 const savedToDolist = localStorage.getItem("toDos");
+// savedToDolist -> '[' '{'' "1"'/' :'/' "''12334''}' ']'
+// localStorage에는 계속 누적돼서 남아있음 (새로고침을 하지 않았다면! + submit만 했을때)
+// 새로고침하면 다 날라감
 
 if (savedToDolist !== null) {
+  //savedToDolist에 값이 남아있다면
+
   const parsedTodolist = JSON.parse(savedToDolist);
-  //객체화시킨것임 -> 배열로 남아있다
+  //객체화시켰다 -> 배열로 남아있음
+  // ==>"배열화"헸다
+  // ex) ["1" : "123434"]
 
   toDos = parsedTodolist;
   //   문제 2)
   //   새로고침하면 이전의 toDo 그려져있다.
   //   하지만 다시 입력하면 localStorage는 초기화가 된다.
+  // ' todoStoreList() 에 toDos.push() -> todo 리스트를 localStorage에 저장'
   // => 이유: toDos [] 가 빈 배열로 초기화 되어있기에 이전의 항목들 날라간다.
   // toDos update 가능한 let으로 바꾼후 parsedTolist (localstorage에 저장되어있는 항목들)을 저장한다.
 
   parsedTodolist.forEach(paintToDo);
   //localstorge에는 toDo가 남아있지만 , 새로고침하면 paintTodo로 그린 애들 증발
   // 보이지않음 새로고침해도 남아있게 parsedTodolist 배열에 있는 애들 다 그려줌
-  //= localstorage에 저장되어있는 투두리스트 item 다 꺼내서 그려줌
+  //= localstorage에 저장되어있는 투두리스트 item 다 꺼내서 그려줌 -> 다시 그려줌
 }
 
-// function limitTodolist(newToDo) {
-//   const li = document.createElement("li");
-//   const span = document.createElement("span");
-//   li.appendChild(span);
-//   span.innerText = newToDo;
-//   todoList.appendChild(li);
-//   listCount.push(newToDo);
-//   //   console.log(listCount);
-//   //   console.log(listCount.length);
-// }
-
-// function deleteToDo(event) {
-//     const li = event.target.parentElement;
-//     console.log(li.id);
-//     li.remove();
-//     toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
-//     saveToDos();
-//   }
+console.log(toDos);
