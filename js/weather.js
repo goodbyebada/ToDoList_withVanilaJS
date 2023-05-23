@@ -1,4 +1,4 @@
-const API_KEY = "080d60dbc7be814f87c52d4df1dad646";
+const API_KEY = "";
 
 // 전역변수로 해도 되나?
 const weatherContainer = document.querySelector("#weather span:first-child");
