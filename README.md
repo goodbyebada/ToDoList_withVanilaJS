@@ -1,1 +1,1 @@
-# TodoList_js
+# TodoList with Vanilla JS!
