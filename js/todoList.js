@@ -5,6 +5,7 @@ const todoList = document.getElementById("todoList");
 let toDos = [];
 
 function deleteToDo(event) {
+  console.log(`===deleteToDo 실행===`);
   const li = event.target.parentElement;
   console.log(li);
   console.log(parseInt(li.id));
@@ -23,9 +24,10 @@ function paintToDo(newToDo) {
 
   li.appendChild(span);
   li.appendChild(btn);
+  btn.type = "button";
 
   span.innerText = newToDo.text;
-  btn.innerText = "check@";
+  btn.innerText = "check";
 
   todoList.appendChild(li);
 
@@ -34,11 +36,13 @@ function paintToDo(newToDo) {
 
 function handleTodolist(e) {
   e.preventDefault();
+  console.log(`===handleTodoList 실행===`);
 
   const newToDo = todoInput.value;
   console.log(newToDo);
 
   todoInput.value = " ";
+  console.log(`=todoInput 공백으로 만들자=`);
 
   const newToDoObj = {
     text: newToDo,
@@ -47,9 +51,7 @@ function handleTodolist(e) {
   //ex) { "1" : "123213"} 한 쌍식 생성
 
   todoStoreList(newToDoObj);
-
   paintToDo(newToDoObj);
-  console.log(`======paintTOdo 실행! ======`);
 }
 
 function todoStoreList(newToDo) {
